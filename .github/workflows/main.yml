@@ -1,0 +1,18 @@
+name: Run PowerShell Script
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: self-hosted
+    
+    steps:
+
+      - name: Run Tosca Test Execution
+        run: |
+          powershell -File  C:\Tosca_Projects\ToscaExecutionClient-main\tosca_execution_client.ps1 -toscaServerUrl "https://d-ine-fwqc9r2" -projectName "ToscaCI" -eventsConfigFilePath "C:\Tosca_Projects\ToscaExecutionClient-main\testEvents.json" -executionEnvironment "Dex" -clientId "gAth003F00Cn7Bp9DYVh-w" -clientSecret "QpsPGP2OKE6v403GndyvSw8eor-9HAkkabQArlUq82DA" -importResults "true" -debug "true"
+      - name: upload the test execution results into Githubactions
+        uses: actions/upload-artifact@v3.1.2
+        with: 
+          name: tosca test execution 
+          path: C:/Tosca_Projects/ToscaExecutionClient-main/results/*.xml
+        
